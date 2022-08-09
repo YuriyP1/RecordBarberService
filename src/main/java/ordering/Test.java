@@ -1,5 +1,6 @@
-package ordering.dao.service;
+package ordering;
 
+import ordering.model.service.Record;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -8,7 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Component
-public class RecordDao {
+
+
+public class Test {
+
 
     private final static String URL = "jdbc:postgresql://localhost:5432/record_test";
     private final static String USERNAME = "postgres";
@@ -17,6 +21,7 @@ public class RecordDao {
     private static Connection connection;
 
     private int id;
+
     static {
         try {
             Class.forName("org.postgresql.Driver"); //подгружаем класс в ОЗУ
@@ -31,15 +36,14 @@ public class RecordDao {
         }
     }
 
-    public void createRecord (String name, String phone, String email, String data, String time){
-
+    public static void main(String[] args) {
         try {
             Statement statement = connection.createStatement();
-            String SQL = "INSERT INTO record VALUES (" + ++id + ",'"+name+"','"+phone+"','"+email+"','"
-                    +data+"','"+time+"')";
+            String SQL = "INSERT INTO record VALUES ('Юра','099','@gmail','08.02.01','12')";
             statement.executeUpdate(SQL);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
 }

@@ -1,7 +1,7 @@
 package ordering.controller.service;
 
 
-import ordering.dao.service.RecordDao;
+import ordering.dao.service.RecordDAO;
 import ordering.model.service.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,32 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/record")
 public class RecordController {
 
-    RecordDao recordDao;
+    RecordDAO recordDAO;
 
     @Autowired
-    public RecordController(RecordDao recordDao){
-        this.recordDao = recordDao;
+    public RecordController(RecordDAO recordDAO){
+        this.recordDAO = recordDAO;
     }
 
     @GetMapping("/record-page")
     public String toRecord(Model model){
-        System.out.println("попал в /record-page ");
         model.addAttribute("record", new Record());
         return "service/record-page";
     }
 
     @PostMapping()
-    public String createRecord(@RequestParam("name") String name,
-                          @RequestParam("phone") String phone,
-                          @RequestParam("email") String email,
-                          @RequestParam("data") String data,
-                          @RequestParam("time") String time){
+    public String createRecord(@ModelAttribute("record") Record record){
 
-        System.out.println(name);
-        System.out.println(phone);
-        System.out.println(email);
-        System.out.println(data);
-        System.out.println(time);
+        System.out.println(record.getEmail());
+        recordDAO.createRecord(record);
         return "service/record-success";
     }
 }
